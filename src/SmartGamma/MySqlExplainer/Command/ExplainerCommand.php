@@ -32,6 +32,6 @@ class ExplainerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->write($this->explainer->explainProblematic());
+        $output->writeln($this->explainer->explainProblematic());
     }
 }

@@ -26,5 +26,6 @@ class ExplainerSpec extends ObjectBehavior
     function it_explain_problematic_queries()
     {
         $this->explainProblematic()->shouldBeArray();
+        $this->explainProblematic()->shouldHaveCount(1);
     }
 }

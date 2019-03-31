@@ -7,6 +7,15 @@ services:
   SmartGamma\MySqlExplainer\:
     resource: '../src/SmartGamma/MySqlExplainer/*'
 
+  SmartGamma\MySqlExplainer\Service\Analyzer:
+    calls:
+      - method: registerProvider
+        arguments:
+          - '@SmartGamma\MySqlExplainer\Service\AnalyzerProvider\MySqlDuration'
+      - method: registerProvider
+        arguments:
+          - '@SmartGamma\MySqlExplainer\Service\AnalyzerProvider\MySqlExplain'
+
   app:
     class: Symfony\Component\Console\Application
     public: true
