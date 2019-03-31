@@ -21,6 +21,7 @@ class ExplainerCommand extends Command
     public function __construct(Explainer $explainer)
     {
         $this->explainer = $explainer;
+
         parent::__construct(self::$defaultName);
     }
 
