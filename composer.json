@@ -22,7 +22,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SmartGamma\\MySqlExplainer\\": "src/"
+            "SmartGamma\\MySqlExplainer\\": "src/SmartGamma/MySqlExplainer"
         }
     },
     "minimum-stability": "stable"

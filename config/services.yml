@@ -5,16 +5,12 @@ services:
     public: false
 
   SmartGamma\MySqlExplainer\:
-    resource: '../src/*'
-    exclude: '../src/{Document}'
+    resource: '../src/SmartGamma/MySqlExplainer/*'
 
-  SmartGamma\MySqlExplainer\Command\ExplainerCommand:
+  app:
+    class: Symfony\Component\Console\Application
     public: true
-
-  SmartGamma\MySqlExplainer\Command\:
-    resource: '../src/Command'
-    tags: ['console.command']
-
-  explainer.command:
-    class: SmartGamma\MySqlExplainer\Command\ExplainerCommand
-    public: true
+    calls:
+      - method: add
+        arguments:
+          - '@SmartGamma\MySqlExplainer\Command\ExplainerCommand'
