@@ -12,4 +12,9 @@ class ConnectionFactorySpec extends ObjectBehavior
     {
         $this->shouldHaveType(ConnectionFactory::class);
     }
+
+    function let()
+    {
+        $this->beConstructedWith('host', 'db', 'user', 'password');
+    }
 }

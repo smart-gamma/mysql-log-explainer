@@ -5,8 +5,16 @@ require_once __DIR__ . '/vendor/autoload.php';
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
+use \Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/.env');
 
 $container = new ContainerBuilder();
+$container->setParameter('dbHost', getenv('DB_HOST'));
+$container->setParameter('dbName', getenv('DB_NAME'));
+$container->setParameter('dbUser', getenv('DB_USER'));
+$container->setParameter('dbPassword', getenv('DB_PASSWORD'));
 $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
 $loader->load('services.yml');
 $container->compile();

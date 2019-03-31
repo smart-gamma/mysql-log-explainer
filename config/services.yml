@@ -3,6 +3,11 @@ services:
     autowire: true
     autoconfigure: true
     public: false
+    bind:
+      $dbHost: '%dbHost%'
+      $dbName: '%dbName%'
+      $dbUser: '%dbUser%'
+      $dbPassword: '%dbPassword%'
 
   SmartGamma\MySqlExplainer\:
     resource: '../src/SmartGamma/MySqlExplainer/*'
