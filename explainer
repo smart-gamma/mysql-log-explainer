@@ -15,6 +15,7 @@ $container->setParameter('dbHost', getenv('DB_HOST'));
 $container->setParameter('dbName', getenv('DB_NAME'));
 $container->setParameter('dbUser', getenv('DB_USER'));
 $container->setParameter('dbPassword', getenv('DB_PASSWORD'));
+$container->setParameter('logPath', getenv('PATH_TO_LOG'));
 $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
 $loader->load('services.yml');
 $container->compile();

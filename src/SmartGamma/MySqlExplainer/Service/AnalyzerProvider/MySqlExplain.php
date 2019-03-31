@@ -27,12 +27,19 @@ class MySqlExplain implements AnalyzerProviderInterface
     {
         $analyzeResultDTO = new AnalyzeResultDTO();
 
-        $res     = $this->connection->query('EXPLAIN ' . $query);
-        $analyzeResultDTO->data = $res->fetchAll(\PDO::FETCH_ASSOC);
+        $res = $this->connection->query('EXPLAIN ' . $query);
+        if (is_object($res)) {
+            $analyzeResultDTO->data = $res->fetchAll(\PDO::FETCH_ASSOC);
+        } else {
+            $analyzeResultDTO->data         = [['Explain' => '<error>Impossible to get</error>']];
+            $analyzeResultDTO->problemFound = true;
+        }
 
-        foreach($analyzeResultDTO->data as &$line) {
-            $analyzeResultDTO->problemFound = preg_match(self::PROBLEM_KEYWORDS_PATTERN, $line['Extra']) ? true : $analyzeResultDTO->problemFound;
-            $line['Extra'] = preg_replace(self::PROBLEM_KEYWORDS_PATTERN, '<error>$1</error>', $line['Extra']);
+        foreach ($analyzeResultDTO->data as &$line) {
+            if(array_key_exists('Extra', $line)) {
+                $analyzeResultDTO->problemFound = preg_match(self::PROBLEM_KEYWORDS_PATTERN, $line['Extra']) ? true : $analyzeResultDTO->problemFound;
+                $line['Extra']                  = preg_replace(self::PROBLEM_KEYWORDS_PATTERN, '<error>$1</error>', $line['Extra']);
+            }
         }
 
         return $analyzeResultDTO;

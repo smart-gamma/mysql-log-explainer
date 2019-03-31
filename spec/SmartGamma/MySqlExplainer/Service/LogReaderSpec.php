@@ -12,4 +12,9 @@ class LogReaderSpec extends ObjectBehavior
     {
         $this->shouldHaveType(LogReader::class);
     }
+
+    function let()
+    {
+        $this->beConstructedWith('/pat/to/file');
+    }
 }

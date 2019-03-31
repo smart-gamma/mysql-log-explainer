@@ -8,6 +8,7 @@ services:
       $dbName: '%dbName%'
       $dbUser: '%dbUser%'
       $dbPassword: '%dbPassword%'
+      $logPath: '%logPath%'
 
   SmartGamma\MySqlExplainer\:
     resource: '../src/SmartGamma/MySqlExplainer/*'
