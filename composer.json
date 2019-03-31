@@ -3,6 +3,7 @@
     "description": "Allows scanning a log file and pick problematic queries from explain loop execution output",
     "type": "library",
     "require": {
+        "ext-pdo": "*",
         "symfony/dotenv": "^4.2",
         "symfony/console": "^4.2",
         "paragonie/easydb": "^2.9",
