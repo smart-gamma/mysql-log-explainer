@@ -2,22 +2,25 @@
 
 namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 
+use SmartGamma\MySqlExplainer\Service\Connection\ConnectionFactory;
+
 class MySqlExplain implements AnalyzerProviderInterface
 {
     const PROBLEM_KEYWORDS_PATTERN = '/(Using filesort|Using temporary)/';
+
+    /**
+     * @var ConnectionFactory
+     */
+    protected $connectionFactory;
 
     /**
      * @var \PDO
      */
     private $connection;
 
-    public function __construct()
+    public function __construct(ConnectionFactory $factory)
     {
-        $this->connection = new \PDO(
-            'mysql:host=mysql;dbname=3w1AdminDB',
-            'root',
-            'notsecretpass'
-        );
+        $this->connection = $factory->getConnection();
     }
 
     public function execute(string $query): AnalyzeResultDTO

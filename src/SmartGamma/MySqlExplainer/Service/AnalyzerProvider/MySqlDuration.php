@@ -2,23 +2,26 @@
 
 namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 
+use SmartGamma\MySqlExplainer\Service\Connection\ConnectionFactory;
+
 class MySqlDuration implements AnalyzerProviderInterface
 {
-    //const MAX_LIMIT = 0.0000001;
-    const MAX_LIMIT = 1;
+    const MAX_LIMIT = 0.0000001;
+    //const MAX_LIMIT = 1;
+
+    /**
+     * @var ConnectionFactory
+     */
+    protected $connectionFactory;
 
     /**
      * @var \PDO
      */
     private $connection;
 
-    public function __construct()
+    public function __construct(ConnectionFactory $factory)
     {
-        $this->connection = new \PDO(
-            'mysql:host=mysql;dbname=3w1AdminDB',
-            'root',
-            'notsecretpass'
-        );
+        $this->connection = $factory->getConnection();
     }
 
     public function execute(string $query): AnalyzeResultDTO
@@ -26,8 +29,10 @@ class MySqlDuration implements AnalyzerProviderInterface
         $analyzeResultDTO = new  AnalyzeResultDTO();
 
         $this->connection->query('set profiling=1');
+        $this->connection->query('set profiling_history_size = 1');
         $this->connection->query($query);
         $res = $this->connection->query('show profiles');
+        $this->connection->query('set profiling_history_size = 0');
         $records = $res->fetchAll(\PDO::FETCH_ASSOC);
         $duration = $records[0]['Duration'];
 

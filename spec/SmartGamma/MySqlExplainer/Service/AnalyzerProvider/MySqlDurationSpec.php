@@ -6,6 +6,7 @@ use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\AnalyzerProviderInterface
 use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\MySqlDuration;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use SmartGamma\MySqlExplainer\Service\Connection\ConnectionFactory;
 
 class MySqlDurationSpec extends ObjectBehavior
 {
@@ -17,5 +18,10 @@ class MySqlDurationSpec extends ObjectBehavior
     function it_implemets()
     {
         $this->shouldImplement(AnalyzerProviderInterface::class);
+    }
+
+    function let(ConnectionFactory $connectionFactory)
+    {
+        $this->beConstructedWith($connectionFactory);
     }
 }
