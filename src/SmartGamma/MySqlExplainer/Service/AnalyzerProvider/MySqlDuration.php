@@ -4,6 +4,8 @@ namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 
 class MySqlDuration implements AnalyzerProviderInterface
 {
+    const MAX_LIMIT = 0.00001;
+
     /**
      * @var \PDO
      */
@@ -18,14 +20,23 @@ class MySqlDuration implements AnalyzerProviderInterface
         );
     }
 
-    public function execute(string $query): string
+    public function execute(string $query): AnalyzeResultDTO
     {
+        $analyzeResultDTO = new  AnalyzeResultDTO();
+
         $this->connection->query('set profiling=1');
         $this->connection->query($query);
         $res = $this->connection->query('show profiles');
         $records = $res->fetchAll(\PDO::FETCH_ASSOC);
         $duration = $records[0]['Duration'];
 
-        return $duration;
+        if($duration > self::MAX_LIMIT) {
+            $duration = '<error>' . $duration .'</error>';
+            $analyzeResultDTO->problemFound = true;
+        }
+
+        $analyzeResultDTO->data = [['Duration' => $duration]];
+
+        return $analyzeResultDTO;
     }
 }

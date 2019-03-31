@@ -4,5 +4,5 @@ namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 
 interface AnalyzerProviderInterface
 {
-    public function execute(string $queriy): string;
+    public function execute(string $queriy): AnalyzeResultDTO;
 }

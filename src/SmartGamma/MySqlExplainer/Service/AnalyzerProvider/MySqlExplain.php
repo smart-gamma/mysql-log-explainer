@@ -4,6 +4,8 @@ namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 
 class MySqlExplain implements AnalyzerProviderInterface
 {
+    const PROBLEM_KEYWORDS_PATTERN = '/(Using filesort|Using temporary)/';
+
     /**
      * @var \PDO
      */
@@ -18,12 +20,18 @@ class MySqlExplain implements AnalyzerProviderInterface
         );
     }
 
-    public function execute(string $query): string
+    public function execute(string $query): AnalyzeResultDTO
     {
-        $res = $this->connection->query('EXPLAIN '.$query);
-        $records = $res->fetchAll(\PDO::FETCH_ASSOC);
-        var_dump($records);
+        $analyzeResultDTO = new AnalyzeResultDTO();
 
-        return $records;
+        $res     = $this->connection->query('EXPLAIN ' . $query);
+        $analyzeResultDTO->data = $res->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach($analyzeResultDTO->data as &$line) {
+            $analyzeResultDTO->problemFound ?? preg_match(self::PROBLEM_KEYWORDS_PATTERN, $line['Extra']);
+            $line['Extra'] = preg_replace(self::PROBLEM_KEYWORDS_PATTERN, '<error>$1</error>', $line['Extra']);
+        }
+
+        return $analyzeResultDTO;
     }
 }

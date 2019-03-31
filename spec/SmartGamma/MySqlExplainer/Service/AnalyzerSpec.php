@@ -5,6 +5,7 @@ namespace spec\SmartGamma\MySqlExplainer\Service;
 use SmartGamma\MySqlExplainer\Service\Analyzer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\AnalyzeResultDTO;
 use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\MySqlDuration;
 use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\MySqlExplain;
 
@@ -19,8 +20,8 @@ class AnalyzerSpec extends ObjectBehavior
 
     function let(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
     {
-        $mySqlDuration->execute(self::TEST_QUERY)->willReturn('500');
-        $mySqlExplain->execute(self::TEST_QUERY)->willReturn('explain result');
+        $mySqlDuration->execute(self::TEST_QUERY)->willReturn(new AnalyzeResultDTO());
+        $mySqlExplain->execute(self::TEST_QUERY)->willReturn(new AnalyzeResultDTO());
         $this->registerProvider($mySqlDuration);
         $this->registerProvider($mySqlExplain);
     }
