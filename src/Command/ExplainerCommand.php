@@ -8,7 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ExplainerCommand extends Command #implements ContainerAwareInterface
+class ExplainerCommand extends Command implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface

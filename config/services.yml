@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
-    public: true
+    public: false
 
   SmartGamma\MySqlExplainer\:
     resource: '../src/*'
@@ -15,12 +15,6 @@ services:
     resource: '../src/Command'
     tags: ['console.command']
 
-  #explainer.command:
-  #  alias: SmartGamma\MySqlExplainer\Command\ExplainerCommand
-  #  public: true
-
   explainer.command:
     class: SmartGamma\MySqlExplainer\Command\ExplainerCommand
     public: true
-    #tags:
-    #  - { name: 'console.command', command: 'explainer:doctrine-log:analyze' }
