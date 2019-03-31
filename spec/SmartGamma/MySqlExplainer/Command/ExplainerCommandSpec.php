@@ -18,6 +18,7 @@ class ExplainerCommandSpec extends ObjectBehavior
 
     function let(Explainer $explainer)
     {
+        $explainer->explainProblematic()->willReturn(['Analysed output lines']);
         $this->beConstructedWith($explainer);
     }
 

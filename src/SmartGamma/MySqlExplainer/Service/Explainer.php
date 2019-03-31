@@ -20,10 +20,11 @@ class Explainer
         $this->analyzer = $analyzer;
     }
 
-    public function explainProblematic()
+    public function explainProblematic(): array
     {
         $queries = $this->queryParser->parseQueries();
+        $output = $this->analyzer->scannQueries($queries);
 
-        return 'test';
+        return $output;
     }
 }

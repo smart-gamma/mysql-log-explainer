@@ -17,11 +17,14 @@ class ExplainerSpec extends ObjectBehavior
 
     function let(QueryParser $queryParser, Analyzer $analyzer)
     {
+        $queryParser->parseQueries()->willReturn(['fake queries input']);
+        $analyzer->scannQueries(Argument::any())->willReturn(['fake query scanned']);
+
         $this->beConstructedWith($queryParser, $analyzer);
     }
 
     function it_explain_problematic_queries()
     {
-        $this->explainProblematic();
+        $this->explainProblematic()->shouldBeArray();
     }
 }

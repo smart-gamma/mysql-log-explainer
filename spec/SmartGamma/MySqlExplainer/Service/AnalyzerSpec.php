@@ -12,4 +12,10 @@ class AnalyzerSpec extends ObjectBehavior
     {
         $this->shouldHaveType(Analyzer::class);
     }
+
+    function it_scann_queries_throu_registered_analise_providers()
+    {
+        $queries = ['SELECT * from table;'];
+        $this->scannQueries($queries)->shouldBeArray();
+    }
 }
