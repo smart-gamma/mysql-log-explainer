@@ -7,8 +7,6 @@ use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\AnalyzerProviderInterface
 
 class Analyzer
 {
-    const SHOW_ALL = false;
-
     /**
      * @var AnalyzerProviderInterface[]
      */
@@ -21,15 +19,25 @@ class Analyzer
 
     public function scannQueries(array $queries): array
     {
-        foreach ($queries as $query) {
-            $result[] = '<info>' . $query . '</>';
+        $result = [];
+        $resultsToShow = [];
 
+        foreach ($queries as $query) {
+           // $result['query'] = $i++ . '. <info>' . $query . '</>';
+            $problematicQuery = false;
             foreach ($this->providers as $provider) {
-                $analyzeResultDTO = $provider->execute($query);
-                $result[] = (new ArrayToTextTable($analyzeResultDTO->data))->render();
+                $dto = $provider->execute($query);
+                $result[get_class($provider)] = $provider->execute($query);
+                $problematicQuery = $dto->problemFound ?  $dto->problemFound : $problematicQuery;
+            }
+
+            if($problematicQuery) {
+                $resultsToShow[] = $result;
             }
         }
 
-        return $result;
+
+
+        return $resultsToShow;
     }
 }

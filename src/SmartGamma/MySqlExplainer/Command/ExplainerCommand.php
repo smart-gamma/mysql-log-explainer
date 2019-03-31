@@ -2,6 +2,7 @@
 
 namespace SmartGamma\MySqlExplainer\Command;
 
+use dekor\ArrayToTextTable;
 use SmartGamma\MySqlExplainer\Service\Explainer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,6 +33,12 @@ class ExplainerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln($this->explainer->explainProblematic());
+        $analyzeResults = $this->explainer->explainProblematic();
+
+        foreach($analyzeResults as $analyzeResult) {
+            foreach ($analyzeResult as $providerResult) {
+                $output->writeln((new ArrayToTextTable($providerResult->data))->render());
+            }
+        }
     }
 }
