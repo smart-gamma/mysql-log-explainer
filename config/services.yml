@@ -1,0 +1,26 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  SmartGamma\MySqlExplainer\:
+    resource: '../src/*'
+    exclude: '../src/{Document}'
+
+  SmartGamma\MySqlExplainer\Command\ExplainerCommand:
+    public: true
+
+  SmartGamma\MySqlExplainer\Command\:
+    resource: '../src/Command'
+    tags: ['console.command']
+
+  #explainer.command:
+  #  alias: SmartGamma\MySqlExplainer\Command\ExplainerCommand
+  #  public: true
+
+  explainer.command:
+    class: SmartGamma\MySqlExplainer\Command\ExplainerCommand
+    public: true
+    #tags:
+    #  - { name: 'console.command', command: 'explainer:doctrine-log:analyze' }

@@ -1,0 +1,29 @@
+{
+    "name": "smart-gamma/mysql-log-explainer",
+    "description": "Allows scanning a log file and pick problematic queries from explain loop execution output",
+    "type": "library",
+    "require": {
+        "symfony/dotenv": "^4.2",
+        "symfony/console": "^4.2",
+        "paragonie/easydb": "^2.9",
+        "symfony/dependency-injection": "^4.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0",
+        "phpspec/phpspec": "^5.1",
+        "symfony/config": "^4.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeniy Kuzmin",
+            "email": "evgeniy.k@smart-gamma.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SmartGamma\\MySqlExplainer\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
