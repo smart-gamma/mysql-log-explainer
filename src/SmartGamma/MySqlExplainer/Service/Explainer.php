@@ -17,7 +17,7 @@ class Explainer
     public function __construct(QueryParser $queryParser, Analyzer $analyzer)
     {
         $this->queryParser = $queryParser;
-        $this->analyzer = $analyzer;
+        $this->analyzer    = $analyzer;
     }
 
     public function explainProblematic(): array

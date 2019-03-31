@@ -5,7 +5,7 @@ namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 class AnalyzeResultDTO
 {
     const OUTPUT_FORMAT_SIMPLE = 'simple';
-    const OUTPUT_FORMAT_TABLE = 'table';
+    const OUTPUT_FORMAT_TABLE  = 'table';
 
     /**
      * table - make console table
@@ -14,6 +14,6 @@ class AnalyzeResultDTO
      * @var string
      */
     public $outputFormat = self::OUTPUT_FORMAT_TABLE;
-    public $data = [];
+    public $data         = [];
     public $problemFound = false;
 }

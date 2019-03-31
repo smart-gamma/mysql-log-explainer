@@ -35,7 +35,7 @@ class ExplainerCommand extends Command
     {
         $analyzeResults = $this->explainer->explainProblematic();
 
-        foreach($analyzeResults as $analyzeResult) {
+        foreach ($analyzeResults as $analyzeResult) {
             foreach ($analyzeResult as $providerResult) {
                 $line = $providerResult->outputFormat == 'table' ? (new ArrayToTextTable($providerResult->data))->render() : $providerResult->data;
                 $output->writeln($line);

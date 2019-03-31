@@ -41,7 +41,7 @@ class ConnectionFactory
     {
         if (!self::$connection) {
             self::$connection = new \PDO(
-                sprintf('mysql:host=%s;dbname=%s',$this->dbHost, $this->dbName)  ,
+                sprintf('mysql:host=%s;dbname=%s', $this->dbHost, $this->dbName),
                 $this->dbUser,
                 $this->dbPassword
             );

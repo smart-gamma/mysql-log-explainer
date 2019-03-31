@@ -19,19 +19,19 @@ class Analyzer
 
     public function scannQueries(array $queries): array
     {
-        $result = [];
+        $result        = [];
         $resultsToShow = [];
 
         foreach ($queries as $query) {
-           // $result['query'] = $i++ . '. <info>' . $query . '</>';
+            // $result['query'] = $i++ . '. <info>' . $query . '</>';
             $problematicQuery = false;
             foreach ($this->providers as $provider) {
-                $dto = $provider->execute($query);
+                $dto                          = $provider->execute($query);
                 $result[get_class($provider)] = $provider->execute($query);
-                $problematicQuery = $dto->problemFound ?  $dto->problemFound : $problematicQuery;
+                $problematicQuery             = $dto->problemFound ? $dto->problemFound : $problematicQuery;
             }
 
-            if($problematicQuery) {
+            if ($problematicQuery) {
                 $resultsToShow[] = $result;
             }
         }
