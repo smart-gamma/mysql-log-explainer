@@ -19,8 +19,8 @@ class AnalyzerSpec extends ObjectBehavior
 
     function let(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
     {
-        $mySqlDuration->execute(self::TEST_QUERY)->willReturn(['500']);
-        $mySqlExplain->execute(self::TEST_QUERY)->willReturn(['explain result']);
+        $mySqlDuration->execute(self::TEST_QUERY)->willReturn('500');
+        $mySqlExplain->execute(self::TEST_QUERY)->willReturn('explain result');
         $this->registerProvider($mySqlDuration);
         $this->registerProvider($mySqlExplain);
     }
