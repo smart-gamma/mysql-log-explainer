@@ -4,7 +4,8 @@ namespace SmartGamma\MySqlExplainer\Service\AnalyzerProvider;
 
 class MySqlDuration implements AnalyzerProviderInterface
 {
-    const MAX_LIMIT = 0.0000001;
+    //const MAX_LIMIT = 0.0000001;
+    const MAX_LIMIT = 1;
 
     /**
      * @var \PDO

@@ -37,7 +37,8 @@ class ExplainerCommand extends Command
 
         foreach($analyzeResults as $analyzeResult) {
             foreach ($analyzeResult as $providerResult) {
-                $output->writeln((new ArrayToTextTable($providerResult->data))->render());
+                $line = $providerResult->outputFormat == 'table' ? (new ArrayToTextTable($providerResult->data))->render() : $providerResult->data;
+                $output->writeln($line);
             }
         }
     }
