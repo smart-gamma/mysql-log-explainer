@@ -3,6 +3,7 @@
 namespace spec\SmartGamma\MySqlExplainer\Service;
 
 use SmartGamma\MySqlExplainer\Service\Analyzer;
+use SmartGamma\MySqlExplainer\Service\AnalyzerProvider\AnalyzeResultDTO;
 use SmartGamma\MySqlExplainer\Service\Explainer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -18,7 +19,7 @@ class ExplainerSpec extends ObjectBehavior
     function let(QueryParser $queryParser, Analyzer $analyzer)
     {
         $queryParser->parseQueries()->willReturn(['fake queries input']);
-        $analyzer->scannQueries(Argument::any())->willReturn(['fake query scanned']);
+        $analyzer->scannQueries(Argument::any())->willReturn([['provider' => new AnalyzeResultDTO()]]);
 
         $this->beConstructedWith($queryParser, $analyzer);
     }

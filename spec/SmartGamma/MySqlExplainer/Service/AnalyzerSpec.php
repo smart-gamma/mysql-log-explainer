@@ -20,20 +20,66 @@ class AnalyzerSpec extends ObjectBehavior
 
     function let(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
     {
-        $mySqlDuration->execute(self::TEST_QUERY)->willReturn(new AnalyzeResultDTO());
-        $mySqlExplain->execute(self::TEST_QUERY)->willReturn(new AnalyzeResultDTO());
         $this->registerProvider($mySqlDuration);
         $this->registerProvider($mySqlExplain);
     }
 
-    function it_scann_queries_throu_registered_analise_providers()
+    function it_finds_query_if_only_duration_problem_found(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
     {
         $queries = [self::TEST_QUERY];
 
+        $durationProblemDTO = new AnalyzeResultDTO();
+        $durationProblemDTO->problemFound = true;
+
+        $mySqlDuration->execute(self::TEST_QUERY)->willReturn($durationProblemDTO);
+        $mySqlExplain->execute(self::TEST_QUERY)->willReturn(new AnalyzeResultDTO());
+
         $this->scannQueries($queries)->shouldBeArray();
-        // 1 - original query
-        // 2 - duration result provider
-        // 3 - explain result
-        $this->scannQueries($queries)->shouldHaveCount(3);
+        $this->scannQueries($queries)->shouldHaveCount(1);
+    }
+
+    function it_finds_query_if_only_explain_problem_found(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
+    {
+        $queries = [self::TEST_QUERY];
+
+        $explainProblemDTO = new AnalyzeResultDTO();
+        $explainProblemDTO->problemFound = true;
+
+        $mySqlDuration->execute(self::TEST_QUERY)->willReturn(new AnalyzeResultDTO());
+        $mySqlExplain->execute(self::TEST_QUERY)->willReturn($explainProblemDTO);
+
+        $this->scannQueries($queries)->shouldBeArray();
+        $this->scannQueries($queries)->shouldHaveCount(1);
+    }
+
+    function it_finds_query_if_duration_and_explain_problem_found(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
+    {
+        $queries = [self::TEST_QUERY];
+
+        $explainProblemDTO = new AnalyzeResultDTO();
+        $explainProblemDTO->problemFound = true;
+
+        $durationProblemDTO = new AnalyzeResultDTO();
+        $durationProblemDTO->problemFound = true;
+
+        $mySqlDuration->execute(self::TEST_QUERY)->willReturn($durationProblemDTO);
+        $mySqlExplain->execute(self::TEST_QUERY)->willReturn($explainProblemDTO);
+
+        $this->scannQueries($queries)->shouldBeArray();
+        $this->scannQueries($queries)->shouldHaveCount(1);
+    }
+
+    function it_skips_query_if_no_problem_found(MySqlDuration $mySqlDuration, MySqlExplain $mySqlExplain)
+    {
+        $queries = [self::TEST_QUERY];
+
+        $explainProblemDTO = new AnalyzeResultDTO();
+        $durationProblemDTO = new AnalyzeResultDTO();
+
+        $mySqlDuration->execute(self::TEST_QUERY)->willReturn($durationProblemDTO);
+        $mySqlExplain->execute(self::TEST_QUERY)->willReturn($explainProblemDTO);
+
+        $this->scannQueries($queries)->shouldBeArray();
+        $this->scannQueries($queries)->shouldHaveCount(0);
     }
 }

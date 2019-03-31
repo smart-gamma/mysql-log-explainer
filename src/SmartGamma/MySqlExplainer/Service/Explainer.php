@@ -23,8 +23,8 @@ class Explainer
     public function explainProblematic(): array
     {
         $queries = $this->queryParser->parseQueries();
-        $output = $this->analyzer->scannQueries($queries);
+        $results = $this->analyzer->scannQueries($queries);
 
-        return $output;
+        return $results;
     }
 }
