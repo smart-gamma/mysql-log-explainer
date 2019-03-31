@@ -2,6 +2,7 @@
 
 namespace spec\SmartGamma\MySqlExplainer\Service;
 
+use SmartGamma\MySqlExplainer\Service\Analyzer;
 use SmartGamma\MySqlExplainer\Service\Explainer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -14,13 +15,13 @@ class ExplainerSpec extends ObjectBehavior
         $this->shouldHaveType(Explainer::class);
     }
 
-    function let(QueryParser $queryParser)
+    function let(QueryParser $queryParser, Analyzer $analyzer)
     {
-        $this->beConstructedWith($queryParser);
+        $this->beConstructedWith($queryParser, $analyzer);
     }
 
-    function it_anaylze_input_queries()
+    function it_explain_problematic_queries()
     {
-        $this->analyze();
+        $this->explainProblematic();
     }
 }

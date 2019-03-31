@@ -9,12 +9,18 @@ class Explainer
      */
     private $queryParser;
 
-    public function __construct(QueryParser $queryParser)
+    /**
+     * @var Analyzer
+     */
+    private $analyzer;
+
+    public function __construct(QueryParser $queryParser, Analyzer $analyzer)
     {
         $this->queryParser = $queryParser;
+        $this->analyzer = $analyzer;
     }
 
-    public function analyze()
+    public function explainProblematic()
     {
         $queries = $this->queryParser->parseQueries();
 
